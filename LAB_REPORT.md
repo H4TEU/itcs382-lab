@@ -63,13 +63,14 @@ Table 2. All findings on the starter code
 | 14 | ParcelService.java:38–49 | pickUp mixes parcel lookup, state changes, persistence and fee calculation | Copilot | Procedural cohesion | Yes (these operations occur in one method.) |
 | 15 |ParcelService.java:9–82 | ParcelService has multiple responsibilities | Copilot | Weak class cohesion | Yes (business logic, persistence and console output are combined.) |
 | 16 |Parcel.java:7,13, ParcelService.java:28,43,67,77 | Shared status string conventions across classes | Copilot | Connascence of convention | Yes (both classes depend on the same status values, although the precise connascence classification is debatable.) |
-2.1 Name two problems that only the AI review found.
-    1. `Parcel.status` is public, so other classes can change the parcel status directly without validation.
-    2. `getLockers()` returns the internal list, allowing other classes to modify the lockers directly.
-2.2 Name one problem that only SonarQube found, or write none.
+
+**2.1 Name two problems that only the AI review found.** <br>
+    1. `Parcel.status` is public, so other classes can change the parcel status directly without validation.<br>
+    2. `getLockers()` returns the internal list, allowing other classes to modify the lockers directly.<br>
+**2.2 Name one problem that only SonarQube found, or write none.**<br>
     SonarQube found the use of `System.out` instead of a logger. The AI review did not report this issue.
-2.3 Name one AI finding that was wrong or too vague, and explain why. If every finding was right, explain how you checked them.
-    The AI finding about `main()` was too vague. The method handles different commands, but they all have the same purpose.
+**2.3 Name one AI finding that was wrong or too vague, and explain why. If every finding was right, explain how you checked them.**<br>
+    The AI finding about `main()` was too vague. The method handles different commands, but they all have the same purpose.<br>
 ## Task 3. Fix and check
 
 Table 3. What you did with each SonarQube issue in Table 1
@@ -88,6 +89,7 @@ Table 3. What you did with each SonarQube issue in Table 1
 | 10 | Kept | Console output is needed to show messages to the user.|
 | 11 | Fixed | Used try-with-resources to close FileWriter.|
 | 12 | Fixed | Added exception handling instead of an empty catch block.|
+
 Number of SonarQube issues that remain after your fixes: 7
 
 The two design problems that you fixed
@@ -129,25 +131,25 @@ P1,PICKED_UP
 | AI review findings in Check 2 | 3 findings: god class, procedural cohesion, and connascence. | 3 findings: procedural cohesion, content coupling, and connascence. |
 | Review output file in the reviews folder | reviews/bikeshare-poor-review.md | reviews/bikeshare-good-review.md |
 
-4.1 Did SonarQube report any cohesion or coupling problem in bikeshare-poor? Quote the rule and the message if it did.
-No. SonarQube did not directly report cohesion or coupling problems. However, it found related issues such as complex code and public fields.
+**4.1 Did SonarQube report any cohesion or coupling problem in bikeshare-poor? Quote the rule and the message if it did.** <br>
+No. SonarQube did not directly report cohesion or coupling problems. However, it found related issues such as complex code and public fields.<br>
 
-4.2 Did the AI review tell the two versions apart? Give one finding for bikeshare-poor that does not appear for bikeshare-good.
-Yes. The AI review found that bikeshare-poor puts too many tasks in the Main class, such as handling commands, managing bikes, calculating fees, and saving files. In bikeshare-good, these tasks are separated into different classes.
+**4.2 Did the AI review tell the two versions apart? Give one finding for bikeshare-poor that does not appear for bikeshare-good.**<br>
+Yes. The AI review found that bikeshare-poor puts too many tasks in the Main class, such as handling commands, managing bikes, calculating fees, and saving files. In bikeshare-good, these tasks are separated into different classes.<br>
 
-4.3 Which version would you rather extend with a new member type, such as a visitor who pays 4 baht per minute, and why?
-I would choose bikeshare-good because it is easier to update. It uses an enum for member types, so I can add a visitor with a fee of 4 baht per minute and update the input handling.
+**4.3 Which version would you rather extend with a new member type, such as a visitor who pays 4 baht per minute, and why?** <br>
+I would choose bikeshare-good because it is easier to update. It uses an enum for member types, so I can add a visitor with a fee of 4 baht per minute and update the input handling.<br>
 
 ## Task 5. Reflection
 
-5.1 What does SonarQube check, and what does it not check? Answer with examples from this lab.
-SonarQube checks code problems such as unused fields, public fields, and complex methods. For example, it found unused code and incorrect string comparison in ParcelPoint. However, it did not directly identify cohesion and coupling problems like the god class in bikeshare-poor.
+**5.1 What does SonarQube check, and what does it not check? Answer with examples from this lab.**<br>
+SonarQube checks code problems such as unused fields, public fields, and complex methods. For example, it found unused code and incorrect string comparison in ParcelPoint. However, it did not directly identify cohesion and coupling problems like the god class in bikeshare-poor.<br>
 
-5.2 When should you not trust the AI review? Give an example from this lab.
+**5.2 When should you not trust the AI review? Give an example from this lab.**<br>
 I should not trust the AI review without checking the code myself because AI can make mistakes. For example, the AI review found that bikeshare-good did not move bikes between station lists correctly.
 
-5.3 What will you do differently in Project Phase 2 after this lab?
-I will use SonarQube and AI review to check my code and design. I will also try to separate tasks into different classes to make the code easier to understand and update. 
+**5.3 What will you do differently in Project Phase 2 after this lab?**<br>
+I will use SonarQube and AI review to check my code and design. I will also try to separate tasks into different classes to make the code easier to understand and update. <br>
 
 ## AI usage declaration
 
