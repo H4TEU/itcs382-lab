@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class ParcelService {
     private List<Locker> lockers = new ArrayList<>();
@@ -16,7 +17,7 @@ public class ParcelService {
     }
 
     public List<Locker> getLockers() {
-        return lockers;
+        return Collections.unmodifiableList(lockers);
     }
 
     public Locker storeParcel(Parcel parcel) {
