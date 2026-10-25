@@ -67,8 +67,10 @@ Table 2. All findings on the starter code
 **2.1 Name two problems that only the AI review found.** <br>
     1. `Parcel.status` is public, so other classes can change the parcel status directly without validation.<br>
     2. `getLockers()` returns the internal list, allowing other classes to modify the lockers directly.<br>
+    
 **2.2 Name one problem that only SonarQube found, or write none.**<br>
-    SonarQube found the use of `System.out` instead of a logger. The AI review did not report this issue.
+    SonarQube found the use of `System.out` instead of a logger. The AI review did not report this issue.<br>
+
 **2.3 Name one AI finding that was wrong or too vague, and explain why. If every finding was right, explain how you checked them.**<br>
     The AI finding about `main()` was too vague. The method handles different commands, but they all have the same purpose.<br>
 ## Task 3. Fix and check
