@@ -1,0 +1,18 @@
+Files read: bikeshare-good/src/main/java/bikeshare/Bike.java, bikeshare-good/src/main/java/bikeshare/BikeShareConsole.java, bikeshare-good/src/main/java/bikeshare/BikeShareService.java, bikeshare-good/src/main/java/bikeshare/CsvRideRepository.java, bikeshare-good/src/main/java/bikeshare/Main.java, bikeshare-good/src/main/java/bikeshare/MemberType.java, bikeshare-good/src/main/java/bikeshare/Ride.java, bikeshare-good/src/main/java/bikeshare/RideRepository.java, bikeshare-good/src/main/java/bikeshare/Station.java
+
+| No. | Check | Code location (file:line) | Finding | Severity (Must fix, Should fix or Note) | Suggested fix |
+|---:|---|---|---|---|---|
+| 1 | Code quality | bikeshare-good/src/main/java/bikeshare/BikeShareService.java:31-53 | `returnBike` validates the bike and minutes but never validates the destination station and never moves the bike between `Station` objects; it only updates the bike’s field, so the bike remains in the old station list while reporting a new station. | Must fix | Validate the station before returning and move the bike between station collections instead of only updating the bike’s field. |
+| 2 | Code quality | bikeshare-good/src/main/java/bikeshare/BikeShareConsole.java:13-66 | `run` is a long command loop that covers input reading, token parsing, command dispatch, validation, service calls, and printing, so the control flow is hard to follow and test. | Should fix | Extract command parsing and command execution into smaller methods. |
+| 3 | Code quality | bikeshare-good/src/main/java/bikeshare/BikeShareConsole.java:34-40 | The receipt prints `ride.csvLine().split(",")[5]`, which depends on the exact CSV serialization order and breaks if the field order or separators change. | Should fix | Read the fee from a dedicated `Ride` getter instead of parsing the serialized CSV string. |
+| 4 | Cohesion | bikeshare-good/src/main/java/bikeshare/BikeShareConsole.java:13-66 | `run` has procedural cohesion because it performs a sequence of unrelated steps in one method: read input, parse tokens, dispatch commands, validate arguments, mutate state, and print output. | Should fix | Split the CLI loop into separate methods for input handling, validation, and command execution. |
+| 5 | Coupling | bikeshare-good/src/main/java/bikeshare/BikeShareConsole.java:34-40; bikeshare-good/src/main/java/bikeshare/Ride.java:18-20 | The console depends on the `Ride` serialization format (`csvLine()`) and indexes into a comma-split string to get the fee, which is content coupling with the representation rather than the object’s data. | Must fix | Depend on explicit `Ride` accessors instead of on its serialized string representation. |
+| 6 | Connascence | bikeshare-good/src/main/java/bikeshare/Ride.java:18-20; bikeshare-good/src/main/java/bikeshare/BikeShareConsole.java:34-40 | The console logic assumes the exact positional order of CSV fields (`bikeId, memberId, memberType, station, minutes, fee`), so changing that order breaks the call site; this is connascence of position. | Should fix | Expose a `getFee()` accessor on `Ride` and print the fee directly. |
+
+Number of findings for each check:
+- Code quality: 3
+- Cohesion: 1
+- Coupling: 1
+- Connascence: 1
+
+Not found: unused imports, empty blocks, non-private fields, methods returning the class’s internal collection, classes representing more than one thing, and strong coupling beyond the content coupling above.
